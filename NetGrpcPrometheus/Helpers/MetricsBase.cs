@@ -45,9 +45,9 @@ namespace NetGrpcPrometheus.Helpers
         /// </summary>
         /// <param name="method">Information about the call</param>
         /// <param name="inc">Indicates by how much counter should be incremented. By default it's set to 1</param>
-        public virtual void RequestCounterInc(GrpcMethodInfo method, double inc = 1d)
+        public virtual void RequestCounterInc(GrpcMethodInfo method, double inc = 1d, string host="")
         {
-            RequestCounter.Labels(method.MethodType, method.ServiceName, method.Name).Inc(inc);
+            RequestCounter.Labels(method.MethodType, method.ServiceName, method.Name, host).Inc(inc);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace NetGrpcPrometheus.Helpers
         /// <param name="method">Information about the call</param>
         /// <param name="code">Response status code</param>
         /// <param name="inc">Indicates by how much counter should be incremented. By default it's set to 1</param>
-        public virtual void ResponseCounterInc(GrpcMethodInfo method, StatusCode code, double inc = 1d)
+        public virtual void ResponseCounterInc(GrpcMethodInfo method, StatusCode code, double inc = 1d, string host = "")
         {
-            ResponseCounter.Labels(method.MethodType, method.ServiceName, method.Name, code.ToString()).Inc(inc);
+            ResponseCounter.Labels(method.MethodType, method.ServiceName, method.Name, code.ToString(), host).Inc(inc);
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace NetGrpcPrometheus.Helpers
         /// </summary>
         /// <param name="method">Information about the call</param>
         /// <param name="inc">Indicates by how much counter should be incremented. By default it's set to 1</param>
-        public virtual void StreamReceivedCounterInc(GrpcMethodInfo method, double inc = 1d)
+        public virtual void StreamReceivedCounterInc(GrpcMethodInfo method, double inc = 1d, string host = "")
         {
-            StreamReceivedCounter.Labels(method.MethodType, method.ServiceName, method.Name).Inc(inc);
+            StreamReceivedCounter.Labels(method.MethodType, method.ServiceName, method.Name, host).Inc(inc);
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace NetGrpcPrometheus.Helpers
         /// </summary>
         /// <param name="method">Information about the call</param>
         /// <param name="inc">Indicates by how much counter should be incremented. By default it's set to 1</param>
-        public virtual void StreamSentCounterInc(GrpcMethodInfo method, double inc = 1d)
+        public virtual void StreamSentCounterInc(GrpcMethodInfo method, double inc = 1d, string host = "")
         {
-            StreamSentCounter.Labels(method.MethodType, method.ServiceName, method.Name).Inc(inc);
+            StreamSentCounter.Labels(method.MethodType, method.ServiceName, method.Name, host).Inc(inc);
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace NetGrpcPrometheus.Helpers
         /// </summary>
         /// <param name="method">Infromation about the call</param>
         /// <param name="value">Value that should be recorded</param>
-        public virtual void RecordLatency(GrpcMethodInfo method, double value)
+        public virtual void RecordLatency(GrpcMethodInfo method, double value, string host = "")
         {
             if (EnableLatencyMetrics)
             {
-                LatencyHistogram.Labels(method.MethodType, method.ServiceName, method.Name).Observe(value);
+                LatencyHistogram.Labels(method.MethodType, method.ServiceName, method.Name, host).Observe(value);
             }
         }
     }

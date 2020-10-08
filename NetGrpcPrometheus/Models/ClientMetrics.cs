@@ -19,24 +19,24 @@ namespace NetGrpcPrometheus.Models
         public ClientMetrics()
         {
             RequestCounter = Metrics.CreateCounter("grpc_client_started_total",
-                "Total number of RPCs started on the client", "grpc_type", "grpc_service", "grpc_method");
+                "Total number of RPCs started on the client", "grpc_type", "grpc_service", "grpc_method","grpc_host");
 
             ResponseCounter = Metrics.CreateCounter("grpc_client_handled_total",
-                "Total number of RPCs completed by the client, regardless of success or failure", "grpc_type", "grpc_service", "grpc_method", "grpc_code");
+                "Total number of RPCs completed by the client, regardless of success or failure", "grpc_type", "grpc_service", "grpc_method", "grpc_code", "grpc_host");
 
             StreamReceivedCounter = Metrics.CreateCounter("grpc_client_msg_received_total",
                 "Total number of RPC stream messages received by the client", "grpc_type", "grpc_service",
-                "grpc_method");
+                "grpc_method", "grpc_host");
 
             StreamSentCounter = Metrics.CreateCounter("grpc_client_msg_sent_total",
-                "Total number of gRPC stream messages sent by the client", "grpc_type", "grpc_service", "grpc_method");
+                "Total number of gRPC stream messages sent by the client", "grpc_type", "grpc_service", "grpc_method", "grpc_host");
 
             LatencyHistogram = Metrics.CreateHistogram("grpc_client_handling_seconds",
                 "Histogram of response latency (seconds) of the gRPC",
                 new HistogramConfiguration
                 {
                     Buckets = new[] { .001, .005, .01, .05, 0.075, .1, .25, .5, 1, 2, 5, 10 },
-                    LabelNames = new []{"grpc_type", "grpc_service", "grpc_method"}
+                    LabelNames = new []{"grpc_type", "grpc_service", "grpc_method", "grpc_host" }
                 }
                 );
         }
